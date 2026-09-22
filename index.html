@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catamayo Establecimientos</title>
+     <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+
+    <header class="encabezado">
+        <nav class="navegacion">
+            <a href="inicio.html">Inicio</a>
+            <a href="restaurantes.html">Restaurantes</a>
+            <a href="piscinas.html">Piscinas</a>
+            <a href="#ranking">Ranking</a>
+
+            <button id="themeToggle" class="theme-btn">
+                Modo oscuro
+            </button>
+        </nav>
+    </header>
+
+    <section class="titulo-principal">
+        <h1>¿A dónde quieres ir hoy a disfrutar?</h1>
+        <p>Catamayo - Valle del Eterno Sol</p>
+    </section>
+
+    <main>
+
+        <section id="inicio" class="presentacion">
+
+            <div class="lado restaurantes-inicio">
+
+                <div class="contenido-inicio">
+                    <h2>Echa un ojo a los establecimientos de comida</h2>
+
+                    <a class="boton-inicio" href="restaurantes.html">
+                        Restaurantes
+                    </a>
+                </div>
+
+            </div>
+
+
+            <div class="lado piscinas-inicio">
+
+                <div class="contenido-inicio">
+                    <h2>No te quedes con las ganas de visitar nuestras piscinas</h2>
+
+                    <a class="boton-inicio" href="piscinas.html">
+                     Piscinas
+                    </a>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section id="ranking" class="ranking-inicio">
+
+            <h2>Top 5 mejores votados</h2>
+
+            <div id="listaRanking">
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>
+            Sistema web de piscinas y restaurantes del cantón Catamayo
+        </p>
+    </footer>
+
+    <script type="module" src="/src/theme.js"></script>
+    <script type="module" src="/src/main.js"></script>
+
+
+</body>
+
+</html>

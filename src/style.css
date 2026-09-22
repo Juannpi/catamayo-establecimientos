@@ -1,0 +1,406 @@
+/* =========================
+   CONFIGURACIÓN GENERAL
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --azul-agua: #bdeff2;
+    --azul-like: #3b82f6;
+
+    --coral: #ffd6ba;
+    --arena: #fff0c2;
+    --crema: #fff8e7;
+
+    --texto: #24323d;
+    --blanco: #ffffff;
+}
+
+body.dark {
+    --azul-agua: #244b52;
+    --coral: #5a3c30;
+    --arena: #514723;
+    --crema: #17212b;
+
+    --texto: #f5f5f5;
+    --blanco: #24313d;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--crema);
+    color: var(--texto);
+}
+
+
+/* =========================
+   BARRA DE NAVEGACIÓN
+========================= */
+
+.encabezado {
+    background: var(--blanco);
+    padding: 18px 40px;
+}
+
+.navegacion {
+    display: flex;
+    gap: 30px;
+}
+
+.navegacion a {
+    color: var(--texto);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+/* =========================
+   TÍTULO PRINCIPAL
+========================= */
+
+.titulo-principal {
+    text-align: center;
+    padding: 35px 20px;
+    background: var(--crema);
+}
+
+.titulo-principal h1 {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.titulo-principal p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   PÁGINA PRINCIPAL
+========================= */
+
+.presentacion {
+    display: flex;
+    min-height: 520px;
+}
+
+.lado {
+    width: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    padding: 40px;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+/* Imagen de restaurantes */
+
+.restaurantes-inicio {
+    background-color: var(--coral);
+    
+    background-image:
+        linear-gradient(
+            rgba(255, 214, 186, 0.65),
+            rgba(255, 214, 186, 0.65)
+        ),
+        url('/img/restaurantes.jpg');
+}
+
+
+/* Imagen de piscinas */
+
+.piscinas-inicio {
+    background-color: var(--azul-agua);
+
+    background-image:
+        linear-gradient(
+            rgba(189, 239, 242, 0.65),
+            rgba(189, 239, 242, 0.65)
+        ),
+        url('/img/piscinas.jpg');
+}
+
+
+.contenido-inicio {
+    max-width: 420px;
+}
+
+.contenido-inicio h2 {
+    margin-bottom: 40px;
+    font-size: 28px;
+}
+
+
+/* Botones principales */
+
+.boton-inicio {
+    display: inline-block;
+
+    padding: 14px 35px;
+
+    background: var(--blanco);
+    color: var(--texto);
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    transition: transform 0.2s;
+}
+
+.boton-inicio:hover {
+    transform: scale(1.05);
+}
+
+.theme-btn {
+    margin-left: auto;
+
+    padding: 8px 15px;
+
+    background: var(--crema);
+    color: var(--texto);
+
+    border: none;
+    border-radius: 6px;
+
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.theme-btn:hover {
+    opacity: 0.8;
+}
+
+/* =========================
+   RANKING
+========================= */
+
+.ranking-inicio {
+    padding: 40px;
+    background: var(--arena);
+}
+
+.ranking-inicio h2 {
+    margin-bottom: 25px;
+}
+
+#listaRanking {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ranking-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 20px;
+
+    background: var(--blanco);
+
+    border-radius: 8px;
+
+    font-weight: bold;
+}
+
+
+/* Likes */
+
+.likes {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.icono-like {
+    width: 18px;
+    height: 18px;
+
+    fill: var(--azul-like);
+}
+
+
+/* =========================
+   PÁGINAS DE ESTABLECIMIENTOS
+========================= */
+
+.pagina-establecimientos {
+    padding: 40px;
+}
+
+.titulo-pagina {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.titulo-pagina h1 {
+    margin-bottom: 10px;
+}
+
+.titulo-pagina p {
+    line-height: 1.5;
+}
+
+
+/* Contenedor de tarjetas */
+
+.contenedor-tarjetas {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+
+    gap: 25px;
+}
+
+
+/* Tarjetas */
+
+.tarjeta-establecimiento {
+    background: var(--blanco);
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Imagen */
+
+.imagen-establecimiento {
+    width: 100%;
+    height: 220px;
+
+    object-fit: cover;
+}
+
+
+/* Información */
+
+.informacion-establecimiento {
+    padding: 20px;
+}
+
+.informacion-establecimiento h2 {
+    margin-bottom: 15px;
+}
+
+.informacion-establecimiento p {
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+
+/* =========================
+   BOTÓN UBICACIÓN
+========================= */
+
+.boton-ubicacion {
+    display: inline-block;
+
+    padding: 10px 20px;
+
+    background: var(--azul-agua);
+    color: var(--texto);
+
+    text-decoration: none;
+
+    border-radius: 6px;
+
+    font-weight: bold;
+}
+
+.boton-ubicacion:hover {
+    opacity: 0.8;
+}
+
+
+/* =========================
+   BOTÓN LIKE
+========================= */
+
+.boton-like {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    margin-left: 10px;
+
+    padding: 10px 15px;
+
+    background: var(--blanco);
+
+    border: 1px solid var(--azul-agua);
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+.boton-like:hover {
+    background: var(--azul-agua);
+}
+
+
+/* =========================
+   PIE DE PÁGINA
+========================= */
+
+footer {
+    text-align: center;
+
+    padding: 20px;
+
+    background: var(--blanco);
+}
+
+
+/* =========================
+   DISEÑO RESPONSIVO
+========================= */
+
+@media (max-width: 768px) {
+
+    .navegacion {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .presentacion {
+        flex-direction: column;
+    }
+
+    .lado {
+        width: 100%;
+        min-height: 350px;
+    }
+
+    .contenido-inicio h2 {
+        font-size: 23px;
+    }
+
+    .pagina-establecimientos {
+        padding: 25px;
+    }
+
+    .ranking-inicio {
+        padding: 25px;
+    }
+}

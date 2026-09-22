@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Piscinas de Catamayo</title>
+
+    <link rel="stylesheet" href="/src/style.css">
+</head>
+
+<body>
+
+    <header class="encabezado">
+        <nav class="navegacion">
+            <a href="index.html">Inicio</a>
+            <a href="restaurantes.html">Restaurantes</a>
+            <a href="piscinas.html">Piscinas</a>
+            <a href="index.html#ranking">Ranking</a>
+
+            <button id="themeToggle" class="theme-btn">
+                Modo oscuro
+            </button>
+        </nav>
+    </header>
+
+    <main class="pagina-establecimientos">
+
+        <section class="titulo-pagina">
+            <h1>Piscinas de Catamayo</h1>
+
+            <p>
+                Descubre piscinas y hosterías para disfrutar momentos de descanso y diversión.
+            </p>
+        </section>
+
+        <section id="listaPiscinas" class="contenedor-tarjetas">
+        </section>
+
+    </main>
+
+    <footer>
+        <p>
+            Sistema web de piscinas y restaurantes del cantón Catamayo
+        </p>
+    </footer>
+
+    <script type="module" src="/src/theme.js"></script>
+    <script type="module" src="/src/piscinas.js"></script>
+
+</body>
+
+</html>
