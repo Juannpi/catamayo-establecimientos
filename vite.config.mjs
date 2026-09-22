@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+    base: '/catamayo-establecimientos/',
+
     build: {
         rollupOptions: {
             input: {

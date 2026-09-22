@@ -114,7 +114,7 @@ body {
             rgba(255, 214, 186, 0.65),
             rgba(255, 214, 186, 0.65)
         ),
-        url('/img/restaurantes.jpg');
+        url('./img/restaurantes.jpg');
 }
 
 
@@ -128,7 +128,7 @@ body {
             rgba(189, 239, 242, 0.65),
             rgba(189, 239, 242, 0.65)
         ),
-        url('/img/piscinas.jpg');
+        url('./img/piscinas.jpg');
 }
 
 
