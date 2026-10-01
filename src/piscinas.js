@@ -1,5 +1,35 @@
 import { supabase } from './supabase.js';
 
+
+function mostrarAviso(mensaje) {
+
+    const aviso = document.createElement('div');
+
+    aviso.classList.add('aviso-fondo');
+
+    aviso.innerHTML = `
+        <div class="aviso">
+            <h3>El sistema te informa</h3>
+
+            <p>${mensaje}</p>
+
+            <button class="cerrar-aviso">
+                Aceptar
+            </button>
+        </div>
+    `;
+
+    document.body.appendChild(aviso);
+
+    const botonCerrar =
+        aviso.querySelector('.cerrar-aviso');
+
+    botonCerrar.addEventListener('click', () => {
+        aviso.remove();
+    });
+}
+
+
 async function cargarPiscinas() {
 
     // 1. Obtener las piscinas
@@ -7,6 +37,7 @@ async function cargarPiscinas() {
         .from('piscinas')
         .select('*')
         .order('id_pisci', { ascending: true });
+
 
     if (errorPiscinas) {
         console.error(
@@ -18,10 +49,11 @@ async function cargarPiscinas() {
     }
 
 
-    // 2. Obtener registros del ranking
+    // 2. Obtener los registros del ranking
     const { data: ranking, error: errorRanking } = await supabase
         .from('ranking')
         .select('id_ranking, id_pisci, likes');
+
 
     if (errorRanking) {
         console.error(
@@ -33,14 +65,15 @@ async function cargarPiscinas() {
     }
 
 
-    // 3. Obtener el contenedor HTML
+    // 3. Obtener el contenedor del HTML
     const listaPiscinas =
         document.getElementById('listaPiscinas');
+
 
     listaPiscinas.innerHTML = '';
 
 
-    // 4. Crear las tarjetas
+    // 4. Crear una tarjeta por cada piscina
     piscinas.forEach((piscina) => {
 
         const registroRanking = ranking.find(
@@ -48,8 +81,21 @@ async function cargarPiscinas() {
         );
 
 
+        // Si no existe un registro en ranking
+        if (!registroRanking) {
+
+            console.error(
+                'No existe ranking para:',
+                piscina.nombre_pisci
+            );
+
+            return;
+        }
+
+
         const tarjeta =
             document.createElement('article');
+
 
         tarjeta.classList.add(
             'tarjeta-establecimiento'
@@ -115,61 +161,92 @@ async function cargarPiscinas() {
     });
 
 
-    // 5. Buscar botones de like
+    // 5. Buscar todos los botones de like
     const botonesLike =
         document.querySelectorAll('.boton-like');
 
 
-    // 6. Agregar evento click
+    // 6. Agregar evento click a cada botón
     botonesLike.forEach((boton) => {
 
-        boton.addEventListener('click', async () => {
+        boton.addEventListener(
+            'click',
+            async () => {
 
-            const idRanking =
-                boton.dataset.ranking;
-
-            const contador =
-                boton.querySelector('.contador-like');
-
-            const likesActuales =
-                Number(contador.textContent);
-
-            const nuevosLikes =
-                likesActuales + 1;
+                const idRanking =
+                    boton.dataset.ranking;
 
 
-            // 7. Actualizar Supabase
-            const { error } = await supabase
-                .from('ranking')
-                .update({
-                    likes: nuevosLikes
-                })
-                .eq(
-                    'id_ranking',
-                    idRanking
-                );
+                const contador =
+                    boton.querySelector(
+                        '.contador-like'
+                    );
 
 
-            if (error) {
+                // Obtener el visitante actual
+                const codigoVisitante =
+                    localStorage.getItem(
+                        'codigo_visitante'
+                    );
 
-                console.error(
-                    'Error al registrar like:',
-                    error
-                );
 
-                return;
+                if (!codigoVisitante) {
+
+                    mostrarAviso(
+                        'Primero debes elegir tu personaje.'
+                    );
+
+                    return;
+                }
+
+
+                // 7. Intentar registrar el voto
+                const { error } = await supabase
+                    .from('votos')
+                    .insert({
+                        codigo_visitante: codigoVisitante,
+                        id_ranking: idRanking
+                    });
+
+
+                // 8. Comprobar si hubo error
+                if (error) {
+
+                    if (error.code === '23505') {
+
+                        mostrarAviso(
+                            'Ya votaste por este establecimiento.'
+                        );
+
+                    } else {
+
+                        console.error(
+                            'Error al registrar voto:',
+                            error
+                        );
+                    }
+
+                    return;
+                }
+
+
+                // 9. Actualizar visualmente el contador
+                const likesActuales =
+                    Number(
+                        contador.textContent
+                    );
+
+
+                contador.textContent =
+                    likesActuales + 1;
+
             }
-
-
-            // 8. Actualizar pantalla
-            contador.textContent =
-                nuevosLikes;
-
-        });
+        );
 
     });
 
 }
 
 
+// 10. Ejecutar al cargar la página
 cargarPiscinas();

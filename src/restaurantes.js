@@ -1,5 +1,32 @@
 import { supabase } from './supabase.js';
 
+function mostrarAviso(mensaje) {
+
+    const aviso = document.createElement('div');
+
+    aviso.classList.add('aviso-fondo');
+
+    aviso.innerHTML = `
+        <div class="aviso">
+            <h3>El sistema te informa</h3>
+
+            <p>${mensaje}</p>
+
+            <button class="cerrar-aviso">
+                Aceptar
+            </button>
+        </div>
+    `;
+
+    document.body.appendChild(aviso);
+
+    const botonCerrar =
+        aviso.querySelector('.cerrar-aviso');
+
+    botonCerrar.addEventListener('click', () => {
+        aviso.remove();
+    });
+}
 async function cargarRestaurantes() {
 
     // 1. Obtener los restaurantes
@@ -8,8 +35,13 @@ async function cargarRestaurantes() {
         .select('*')
         .order('id_rest', { ascending: true });
 
+
     if (errorRestaurantes) {
-        console.error('Error al cargar restaurantes:', errorRestaurantes);
+        console.error(
+            'Error al cargar restaurantes:',
+            errorRestaurantes
+        );
+
         return;
     }
 
@@ -19,8 +51,13 @@ async function cargarRestaurantes() {
         .from('ranking')
         .select('id_ranking, id_rest, likes');
 
+
     if (errorRanking) {
-        console.error('Error al cargar ranking:', errorRanking);
+        console.error(
+            'Error al cargar ranking:',
+            errorRanking
+        );
+
         return;
     }
 
@@ -28,6 +65,7 @@ async function cargarRestaurantes() {
     // 3. Obtener el contenedor del HTML
     const listaRestaurantes =
         document.getElementById('listaRestaurantes');
+
 
     listaRestaurantes.innerHTML = '';
 
@@ -40,9 +78,24 @@ async function cargarRestaurantes() {
         );
 
 
-        const tarjeta = document.createElement('article');
+        // Si no existe un registro en ranking, no crear la tarjeta
+        if (!registroRanking) {
+            console.error(
+                'No existe ranking para:',
+                restaurante.nombre_rest
+            );
 
-        tarjeta.classList.add('tarjeta-establecimiento');
+            return;
+        }
+
+
+        const tarjeta =
+            document.createElement('article');
+
+
+        tarjeta.classList.add(
+            'tarjeta-establecimiento'
+        );
 
 
         tarjeta.innerHTML = `
@@ -54,7 +107,9 @@ async function cargarRestaurantes() {
 
             <div class="informacion-establecimiento">
 
-                <h2>${restaurante.nombre_rest}</h2>
+                <h2>
+                    ${restaurante.nombre_rest}
+                </h2>
 
                 <p>
                     <strong>Horario:</strong>
@@ -101,52 +156,88 @@ async function cargarRestaurantes() {
         document.querySelectorAll('.boton-like');
 
 
-    // 6. Agregar el evento click a cada botón
+    // 6. Agregar evento click a cada botón
     botonesLike.forEach((boton) => {
 
-        boton.addEventListener('click', async () => {
+        boton.addEventListener(
+            'click',
+            async () => {
 
-            const idRanking =
-                boton.dataset.ranking;
-
-            const contador =
-                boton.querySelector('.contador-like');
-
-            const likesActuales =
-                Number(contador.textContent);
-
-            const nuevosLikes =
-                likesActuales + 1;
+                const idRanking =
+                    boton.dataset.ranking;
 
 
-            // 7. Actualizar el contador en Supabase
-            const { error } = await supabase
-                .from('ranking')
-                .update({
-                    likes: nuevosLikes
-                })
-                .eq('id_ranking', idRanking);
+                const contador =
+                    boton.querySelector(
+                        '.contador-like'
+                    );
 
 
-            if (error) {
-                console.error(
-                    'Error al registrar like:',
-                    error
-                );
+                // Obtener el identificador del visitante
+                const codigoVisitante =
+                    localStorage.getItem(
+                        'codigo_visitante'
+                    );
 
-                return;
+
+                if (!codigoVisitante) {
+
+                    mostrarAviso(
+                        'Primero debes elegir tu personaje.'
+                    );
+
+                    return;
+                }
+
+
+                // 7. Intentar registrar el voto
+                const { error } = await supabase
+                    .from('votos')
+                    .insert({
+                        codigo_visitante: codigoVisitante,
+                        id_ranking: idRanking
+                    });
+
+
+                // 8. Comprobar si hubo error
+                if (error) {
+
+                    // Código PostgreSQL para UNIQUE repetido
+                    if (error.code === '23505') {
+
+                        mostrarAviso(
+                            'Ya votaste por este establecimiento.'
+                        );
+
+                    } else {
+
+                        console.error(
+                            'Error al registrar voto:',
+                            error
+                        );
+                    }
+
+                    return;
+                }
+
+
+                // 9. Actualizar el contador en pantalla
+                const likesActuales =
+                    Number(
+                        contador.textContent
+                    );
+
+
+                contador.textContent =
+                    likesActuales + 1;
+
             }
-
-
-            // 8. Actualizar el número en pantalla
-            contador.textContent =
-                nuevosLikes;
-        });
+        );
 
     });
 
 }
 
 
-// Ejecutar la función al cargar la página
+// 10. Ejecutar al cargar la página
 cargarRestaurantes();
