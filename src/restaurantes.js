@@ -29,6 +29,7 @@ function mostrarAviso(mensaje) {
 }
 async function cargarRestaurantes() {
 
+    const base = import.meta.env.BASE_URL;
     // 1. Obtener los restaurantes
     const { data: restaurantes, error: errorRestaurantes } = await supabase
         .from('restaurantes')
@@ -77,6 +78,9 @@ async function cargarRestaurantes() {
             (item) => item.id_rest === restaurante.id_rest
         );
 
+        const rutaImagen =
+             `${base}img/establecimientos/restaurantes/${restaurante.imagen_url}`;
+
 
         // Si no existe un registro en ranking, no crear la tarjeta
         if (!registroRanking) {
@@ -100,7 +104,7 @@ async function cargarRestaurantes() {
 
         tarjeta.innerHTML = `
             <img
-                src="${restaurante.imagen_url}"
+                src="${rutaImagen}"
                 alt="${restaurante.nombre_rest}"
                 class="imagen-establecimiento"
             >

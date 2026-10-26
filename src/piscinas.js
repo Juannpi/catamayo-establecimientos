@@ -32,6 +32,8 @@ function mostrarAviso(mensaje) {
 
 async function cargarPiscinas() {
 
+    const base = import.meta.env.BASE_URL;
+
     // 1. Obtener las piscinas
     const { data: piscinas, error: errorPiscinas } = await supabase
         .from('piscinas')
@@ -80,6 +82,9 @@ async function cargarPiscinas() {
             (item) => item.id_pisci === piscina.id_pisci
         );
 
+        const rutaImagen =
+            `${base}img/establecimientos/piscinas/${piscina.imagen_url}`;
+
 
         // Si no existe un registro en ranking
         if (!registroRanking) {
@@ -104,7 +109,7 @@ async function cargarPiscinas() {
 
         tarjeta.innerHTML = `
             <img
-                src="${piscina.imagen_url}"
+                src="${rutaImagen}"
                 alt="${piscina.nombre_pisci}"
                 class="imagen-establecimiento"
             >
