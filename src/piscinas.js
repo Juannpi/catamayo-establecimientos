@@ -127,7 +127,7 @@ async function cargarPiscinas() {
 
                 <p>
                     <strong>Precio:</strong>
-                    $${piscina.precio}
+                    $${Number(piscina.precio).toFixed(2)}
                 </p>
 
                 <a

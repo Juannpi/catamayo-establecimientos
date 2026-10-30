@@ -403,6 +403,32 @@ footer {
     .ranking-inicio {
         padding: 25px;
     }
+
+    .personajes {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .personaje {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .personaje img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .personaje:last-child {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 130px;
+}
+
+.seleccion-personaje {
+    padding: 25px 20px;
+}
 }
 
 /* =========================
@@ -430,6 +456,7 @@ footer {
 .seleccion-personaje {
     width: 90%;
     max-width: 750px;
+    max-height: 90vh;
 
     background: var(--crema);
 
@@ -438,6 +465,8 @@ footer {
     border-radius: 15px;
 
     text-align: center;
+
+    overflow-y: auto;
 }
 
 .seleccion-personaje h2 {
