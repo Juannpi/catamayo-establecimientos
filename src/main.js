@@ -55,8 +55,11 @@ function cargarCarrusel() {
         'img/establecimientos/restaurantes/jonshous.png',
         'img/establecimientos/restaurantes/jonshous2.png',
 
-        'img/establecimientos/restaurantes/kingfish.png',
-        'img/establecimientos/restaurantes/kingfish2.png',
+        'img/establecimientos/restaurantes/pinchos.png',
+
+        'img/establecimientos/restaurantes/moreno.png',
+        'img/establecimientos/restaurantes/moreno 1.png',
+        'img/establecimientos/restaurantes/moreno 2.png',
 
         'img/establecimientos/restaurantes/lamagdalena.png',
         'img/establecimientos/restaurantes/lamagdalena2.png',
